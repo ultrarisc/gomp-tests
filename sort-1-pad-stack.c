@@ -55,6 +55,8 @@ insertsort (int *array, int s, int e)
 	array[j + 1] = array[j];
       array[j + 1] = val;
     }
+    for (i = s + 1; i <= e; i++)
+      if (array[i-1] > array[i]) abort();
 }
 
 struct int_pair
@@ -150,6 +152,7 @@ partition (int *array, int lo, int hi)
       if (left >= right)
 	break;
       swap (array, left, right);
+      if (array[left] > array[right]) abort();
     }
   return left;
 }
