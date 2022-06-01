@@ -26,7 +26,7 @@
 
 int failures;
 
-#define THRESHOLD 100
+#define THRESHOLD 1000
 
 static void
 verify (const char *name, double stime, int *array, int count)
@@ -47,6 +47,7 @@ static void
 insertsort (int *array, int s, int e)
 {
   int i, j, val;
+  printf("insertsort: %d, %x %x\n", omp_get_thread_num(), &array[s], &array[e]);
   for (i = s + 1; i <= e; i++)
     {
       val = array[i];
@@ -342,7 +343,7 @@ sort3 (int *array, int count)
 int
 main (int argc, char **argv)
 {
-  int i, count = 1000000;
+  int i, count = 100000;
   double stime;
   int *unsorted, *sorted, num_threads;
   if (argc >= 2)
@@ -371,6 +372,7 @@ main (int argc, char **argv)
   stime = omp_get_wtime ();
   sort1 (sorted, count);
   verify ("sort1", stime, sorted, count);
+  return 0;
 
   memcpy (sorted, unsorted, count * sizeof (int));
   stime = omp_get_wtime ();
